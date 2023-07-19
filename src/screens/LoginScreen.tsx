@@ -1,5 +1,5 @@
-import { View, Text, TextInput, Platform, TouchableOpacity, KeyboardAvoidingView, Keyboard } from 'react-native'
 import React, { useContext } from 'react'
+import { View, Text, TextInput, Platform, TouchableOpacity, KeyboardAvoidingView, Keyboard } from 'react-native'
 import Backgound from '../components/Backgound'
 import WhiteLogo from '../components/WhiteLogo'
 import { loginStyles } from '../theme/loginTheme'
@@ -9,15 +9,15 @@ import { AuthContext } from '../context/AuthContext'
 
 interface Props extends StackScreenProps<any,any>{}
 
-const {singIn} = useContext(AuthContext);
 
 const LoginScreen = ({navigation}:Props) => {
-
-const {email, password, onChange}=useForm({
-  email:'',
-  password:''
-});
-
+  
+  const {singIn} = useContext(AuthContext);
+  const {email, password, onChange}=useForm({
+    email:'',
+    password:''
+  });
+  
 const onLogin=()=>{
   console.log({email,password})
   Keyboard.dismiss(); // cuando se sale aprieta en login se va el teclado

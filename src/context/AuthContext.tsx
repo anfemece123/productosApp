@@ -20,9 +20,7 @@ const authInicialState : AuthState ={
     token:null,
     user:null,
     errorMessage:''
-
 }
-
 
 export const AuthContext= createContext({} as AuthContextProps);
 
@@ -37,10 +35,17 @@ const singIn= async({correo,password}:LoginData)=>{
 try {
     
 const resp = await cafeApi.post<LoginResponse>('/auth/login', {correo, password});
-console.log(resp.data)
+dispatch({
+    type:'singUp',
+    payload:{
+        token:resp.data.token,
+        user:resp.data.usuario
+    }
 
-} catch (error) {
-    console.log(error)
+})
+
+} catch (error:any) {
+    console.log(error.response.data.msg);
     
 }
 
