@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useContext, useEffect } from 'react'
-import { FlatList } from 'react-native-gesture-handler'
+import { View, Text, StyleSheet, TouchableOpacity,RefreshControl,FlatList} from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import { ProductsContext } from '../context/ProductsContext'
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProductsStackParams } from '../navigator/ProductsNavigator';
@@ -8,6 +7,8 @@ import { ProductsStackParams } from '../navigator/ProductsNavigator';
 interface Props extends StackScreenProps<ProductsStackParams,'ProductsScreen'>{}
 
 export default function ProductsScreen({navigation}:Props) {
+
+  const [isRefreshing, setIsRefreshing] = useState(false)
     const {products, loadProducts} = useContext(ProductsContext);
 
     useEffect(() => {
@@ -27,12 +28,21 @@ export default function ProductsScreen({navigation}:Props) {
     
 
     //TODO : PULL TO REFRESH
+    const loadProductsFromBackend = async () => { // *REFRESHING del flat-list
+      setIsRefreshing(true);
+      await loadProducts();
+      setIsRefreshing(false);
+
+    }
+
+
 
   return (
     <View style={{flex:1,marginHorizontal:10}}>
         <FlatList
         data={products}
         keyExtractor={(p)=>p._id}
+        
         renderItem={({item})=>(
           <TouchableOpacity
             activeOpacity={0.8}
@@ -48,6 +58,12 @@ export default function ProductsScreen({navigation}:Props) {
         ItemSeparatorComponent={()=>(
           <View style={styles.itemSeprartor} />
         )}
+        refreshControl={
+          <RefreshControl 
+            refreshing={isRefreshing}
+            onRefresh={loadProductsFromBackend}
+          />
+        }
         />
     </View>
   )

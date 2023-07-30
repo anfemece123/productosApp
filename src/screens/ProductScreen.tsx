@@ -16,7 +16,8 @@ const ProductScreen = ({navigation,route}:Props) => {
   const {id='', name = ''}= route.params;
 
   const {categories}=useCategories();
-  const {loadProductById}= useContext(ProductsContext);
+
+  const {loadProductById,updateProduct,addProduct}= useContext(ProductsContext);
 
   
   
@@ -26,17 +27,11 @@ const ProductScreen = ({navigation,route}:Props) => {
     nombre: name,
     img: ''
   });
-
-
-  
-  
-  
-  
   useEffect(() => {
     navigation.setOptions({
-      title:(name)? name :'Nuevo Producto' //* cambiar el titulo del header por el nombre del producto
+      title:(nombre)? nombre :'Colocar nombre ' //* cambiar el titulo del header por el nombre del producto
     })
-  }, [])
+  }, [nombre])
   
   useEffect(() => {
     loadProduct();
@@ -51,6 +46,18 @@ const ProductScreen = ({navigation,route}:Props) => {
       img :product.img || '',
       nombre:nombre
     })
+  }
+
+
+  const saveOrUpdate = async()=>{
+    if(id.length>0){
+      updateProduct(categoriaId,nombre,id)
+    }else{
+    
+      const tempCategoriaiD=  categoriaId || categories[0]._id; // * para que se renderice la categoria de la primera posicion y no un arreglo vacio o undefined
+      const newProduct = await addProduct(tempCategoriaiD,nombre);
+      onChange(newProduct._id, '_id')
+    }
   }
 
   return (
@@ -82,10 +89,12 @@ const ProductScreen = ({navigation,route}:Props) => {
 
         <Button 
           title='Guardar'
-          onPress={()=>{}}
+          onPress={saveOrUpdate}
           color="#5856D6" 
         />
 
+        {
+          (_id.length>0)&& 
         <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}> 
         <Button 
           title='Camara'
@@ -100,6 +109,8 @@ const ProductScreen = ({navigation,route}:Props) => {
         />
 
         </View>
+        }
+
 
         {
           (img.length > 0 )&&
@@ -107,7 +118,7 @@ const ProductScreen = ({navigation,route}:Props) => {
           source={{ uri: img}}
           style={{
             width:'100%',
-            height:440,
+            height:250,
             marginTop:20
           }}
           /> 
