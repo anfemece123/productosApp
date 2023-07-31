@@ -1,6 +1,7 @@
 import { Children, createContext, useEffect, useState } from "react";
 import { Producto, ProductsResponse, Categoria } from '../interfaces/appInterfaces';
 import cafeApi from "../api/cafeApi";
+import { Asset, ImagePickerResponse } from "react-native-image-picker";
 
 
 type ProductsContextProps={
@@ -76,9 +77,29 @@ export const ProductsProvider =({children}:any)=>{
         
     };
 
-    const uploadImage=async(data:any,id:string)=>{
+    const uploadImage=async(data:Asset,id:string)=>{
 
-}; // TODO: cambiar ANY
+        // TODO : COLOCARLE LOAD A LA PETICION 
+
+        const fileToUpload={
+            uri:JSON.parse(JSON.stringify(data.uri)),
+            type:JSON.parse(JSON.stringify(data.type)),
+            name:JSON.parse(JSON.stringify(data.fileName))
+        }
+
+        const formData = new FormData();
+        formData.append('archivo',fileToUpload);
+
+        try {
+            const resp = await cafeApi.put(`/uploads/productos/${id}`, formData,{
+                headers: {"Content-Type": "multipart/form-data"} // * correccion de error network axios
+            }) //* form data es la informacion del archivo que se va a enviar por el body de tipo form data en postman 
+            console.log(resp);
+        } catch (error) {
+            console.log(error, 'error en uploadImage')
+        }
+
+    }; 
 
     return(
         <ProductsContext.Provider value={{    

@@ -1,12 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, TextInput, Button, Image } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack'
 import { ProductsStackParams } from '../navigator/ProductsNavigator'
 
 import {Picker} from '@react-native-picker/picker';
+import {Asset, launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 import { useCategories } from '../hooks/useCategories';
 import { useForm } from '../hooks/useForm';
 import { ProductsContext } from '../context/ProductsContext';
+
+
 
 
 interface Props extends StackScreenProps<ProductsStackParams,'ProductScreen'>{}
@@ -15,9 +19,11 @@ const ProductScreen = ({navigation,route}:Props) => {
 
   const {id='', name = ''}= route.params;
 
+  const [tempUri, setTempUri] = useState<Asset>({});
+
   const {categories}=useCategories();
 
-  const {loadProductById,updateProduct,addProduct}= useContext(ProductsContext);
+  const {loadProductById,updateProduct,addProduct,uploadImage}= useContext(ProductsContext);
 
   
   
@@ -58,6 +64,39 @@ const ProductScreen = ({navigation,route}:Props) => {
       const newProduct = await addProduct(tempCategoriaiD,nombre);
       onChange(newProduct._id, '_id')
     }
+ 
+
+        uploadImage(tempUri,id);
+  };
+
+  const takePhoto= ()=> {
+    launchCamera({
+      mediaType: 'photo', quality: 0.5}, 
+      (resp)=>{
+
+        console.log(resp)
+        if(resp.didCancel)return;
+        if(!resp.assets)return; 
+
+        setTempUri(resp.assets[0]);
+
+      }
+      );
+  }
+
+  const takePhotoFromGallery=()=>{
+    launchImageLibrary({
+      mediaType: 'photo', quality: 0.5}, 
+      (resp)=>{
+
+        console.log(resp)
+        if(resp.didCancel)return;
+        if(!resp.assets)return; 
+
+        setTempUri(resp.assets[0]);
+
+      }
+      );
   }
 
   return (
@@ -98,13 +137,13 @@ const ProductScreen = ({navigation,route}:Props) => {
         <View style={{flexDirection:'row', justifyContent:'center', marginTop:10}}> 
         <Button 
           title='Camara'
-          onPress={()=>{}}
+          onPress={takePhoto}
           color="#5856D6" 
         />
         <View style={{width:10}}/>
         <Button 
           title='Galeria'
-          onPress={()=>{}}
+          onPress={takePhotoFromGallery}
           color="#5856D6" 
         />
 
@@ -113,7 +152,7 @@ const ProductScreen = ({navigation,route}:Props) => {
 
 
         {
-          (img.length > 0 )&&
+          (img.length > 0 && !tempUri.uri)&&
           <Image 
           source={{ uri: img}}
           style={{
@@ -125,6 +164,18 @@ const ProductScreen = ({navigation,route}:Props) => {
         }
 
         {/* TODO : Mostrar imagen temporal */}
+
+        {
+          (tempUri )&&
+          <Image 
+          source={{ uri: tempUri.uri}}
+          style={{
+            width:'100%',
+            height:250,
+            marginTop:20
+          }}
+          /> 
+        }
 
         {/* <Text> {JSON.stringify(form,null,5)}</Text> */}
 
