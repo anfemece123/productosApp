@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, Platform, TouchableOpacity,TextInput, Keyboard, Alert } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Platform, TouchableOpacity,TextInput, Keyboard, Alert, ImageBackground } from 'react-native'
 import React, { useContext, useEffect } from 'react'
 
 import { loginStyles } from '../theme/loginTheme'
@@ -40,10 +40,11 @@ const RegisterScreen = ({navigation}:Props) => {
   }
   return (
     <>
-      
+      <ImageBackground source={require('../assets/funko-2.jpg')} style={loginStyles.backgound}>
 
+      <View style={loginStyles.overlay}>
       <KeyboardAvoidingView
-      style={{flex:1, backgroundColor:'#5856D6'}}
+      style={{flex:1}}
       behavior={Platform.OS==="ios"? "padding":"height"}
       >
 
@@ -140,6 +141,9 @@ const RegisterScreen = ({navigation}:Props) => {
           </TouchableOpacity>
         </View>
      </KeyboardAvoidingView>
+     </View>
+     </ImageBackground>
+     
 
     </>
   )

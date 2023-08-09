@@ -40,9 +40,9 @@ const onLogin=()=>{
 }
   return (
   <>
-    <ImageBackground source={require('../assets/funkoPop.png')} style={styles.Backgound}>
+    <ImageBackground source={require('../assets/funkoPop.png')} style={loginStyles.backgound}>
 
-      <View style={styles.overlay}>
+      <View style={loginStyles.overlay}>
 
         {/* Background */}
         {/* <Backgound/> */}
@@ -139,14 +139,3 @@ const onLogin=()=>{
 }
 
 export default LoginScreen
-
-const styles= StyleSheet.create({
-  Backgound:{
-    flex: 1,
-    // resizeMode: 'cover',
-  }, 
-  overlay:{
-    flex:1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  }
-})

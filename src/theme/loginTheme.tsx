@@ -1,6 +1,14 @@
 import { StyleSheet } from "react-native";
 
 export const loginStyles = StyleSheet.create({
+    backgound:{
+        flex: 1,
+        // resizeMode: 'cover',
+      }, 
+      overlay:{
+        flex:1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
     formContainer:{
       flex:1,
       paddingHorizontal:30,
@@ -39,10 +47,11 @@ export const loginStyles = StyleSheet.create({
         borderWidth:2,
         backgroundColor:'#04a4a4',
         borderColor:"#04a4a4",
-        paddingHorizontal:150,
+        paddingHorizontal:100,
         paddingVertical:10,
         borderRadius:100
     },
+    
     buttonText:{
         fontSize:20,
         color:"white",
