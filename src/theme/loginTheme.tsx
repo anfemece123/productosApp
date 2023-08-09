@@ -7,6 +7,7 @@ export const loginStyles = StyleSheet.create({
       justifyContent:"center",
       height:600,
       marginBottom:50
+
     },
     title:{
         color:'white',
@@ -15,6 +16,7 @@ export const loginStyles = StyleSheet.create({
         marginTop:20
     },
     label:{
+        fontSize:20,
         marginTop:25,
         color:'white',
         fontWeight:'bold'
@@ -25,7 +27,7 @@ export const loginStyles = StyleSheet.create({
 
     },
     inputFieldIOS:{
-        borderBottomColor:"white",
+        borderBottomColor:"#04a4a4",
         borderBottomWidth:2,
         paddingBottom:4
     },
@@ -35,18 +37,21 @@ export const loginStyles = StyleSheet.create({
     },
     button:{
         borderWidth:2,
-        borderColor:"white",
-        paddingHorizontal:20,
-        paddingVertical:5,
+        backgroundColor:'#04a4a4',
+        borderColor:"#04a4a4",
+        paddingHorizontal:150,
+        paddingVertical:10,
         borderRadius:100
     },
     buttonText:{
-        fontSize:18,
-        color:"white"
+        fontSize:20,
+        color:"white",
+        fontWeight:'bold'
     },
     newUserContainer:{
         alignItems:"flex-end",
-        marginTop:10
+        marginTop:30,
+        fontWeight:'100 '
     },
     buttonReturn:{
         position:'absolute',

@@ -8,10 +8,12 @@ export default function WhiteLogo() {
 
     }}>
         <Image 
-        source={require('../assets/react-logo-white.png')}
+        source={require('../assets/funko-logo-1-2.png')}
         style={{
-            width:110,
-            height:100
+            width:295,
+            height:100,
+            tintColor:'#04a4a4', //color del logo
+            marginBottom:30
         }}
         />
      
