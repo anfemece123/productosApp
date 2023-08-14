@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity,RefreshControl,FlatList} from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { ProductsContext } from '../context/ProductsContext'
+import { ProductsContext } from '../../context/ProductsContext'
 import { StackScreenProps } from '@react-navigation/stack';
-import { ProductsStackParams } from '../navigator/ProductsNavigator';
+import { ProductsStackParams } from '../../navigator/ProductsNavigator';
 
 interface Props extends StackScreenProps<ProductsStackParams,'ProductsScreen'>{}
 
@@ -39,6 +39,7 @@ export default function ProductsScreen({navigation}:Props) {
 
   return (
     <View style={{flex:1,marginHorizontal:10}}>
+      
         <FlatList
         data={products}
         keyExtractor={(p)=>p._id}

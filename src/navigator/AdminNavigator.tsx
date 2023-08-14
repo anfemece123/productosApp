@@ -5,30 +5,24 @@ import ProductsScreen from '../screens/admin/ProductsScreen'
 import ProductScreen from '../screens/admin/ProductScreen';
 import CategoriesScreen from '../screens/CategoriesScreen'
 
-export type ProductsStackParams ={
+export type AdminStackParams ={
     ProductsScreen: object,
     ProductScreen : {id? : string, name?:string},
     CategoriesScreen:undefined
 }
 
-const Stack = createStackNavigator<ProductsStackParams>();
+const Stack = createStackNavigator<AdminStackParams>();
 
-const ProductsNavigator = () => {
+const AdminNavigator = () => {
   return (
    <Stack.Navigator
     screenOptions={{
         cardStyle:{
-            backgroundColor:'#080c14'
+            backgroundColor:'white'
         },
         headerShown:false    
     }}
    >
-    <Stack.Screen
-            name="CategoriesScreen"
-            component={CategoriesScreen}
-            
-           
-        />
         <Stack.Screen 
             name="ProductsScreen"
             component={ProductsScreen}
@@ -46,4 +40,4 @@ const ProductsNavigator = () => {
   )
 }
 
-export default ProductsNavigator
+export default AdminNavigator

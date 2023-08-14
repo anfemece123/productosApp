@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, TextInput, Button, Image } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack'
-import { ProductsStackParams } from '../navigator/ProductsNavigator'
+import { ProductsStackParams } from '../../navigator/ProductsNavigator'
 
 import {Picker} from '@react-native-picker/picker';
 import {Asset, launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-import { useCategories } from '../hooks/useCategories';
-import { useForm } from '../hooks/useForm';
-import { ProductsContext } from '../context/ProductsContext';
+import { useCategories } from '../../hooks/useCategories';
+import { useForm } from '../../hooks/useForm';
+import { ProductsContext } from '../../context/ProductsContext';
 
 
 

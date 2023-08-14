@@ -54,6 +54,7 @@ export interface Categoria {
     _id:     string;
     nombre:  string;
     usuario?: CreadoPor;
+    img:string;
 }
 
 export interface CreadoPor {
