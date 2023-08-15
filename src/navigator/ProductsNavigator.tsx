@@ -3,12 +3,14 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import ProductsScreen from '../screens/admin/ProductsScreen'
 import ProductScreen from '../screens/admin/ProductScreen';
-import CategoriesScreen from '../screens/CategoriesScreen'
+import CategoriesScreen from '../screens/user/CategoriesScreen'
+import ProductosUserScreen from '../screens/user/ProductosUserScreen';
+import DetailProductScreen from '../screens/user/DetailProductScreen';
 
 export type ProductsStackParams ={
-    ProductsScreen: object,
-    ProductScreen : {id? : string, name?:string},
-    CategoriesScreen:undefined
+    CategoriesScreen:undefined,
+    ProductosUserScreen: undefined,
+    DetailProductScreen: object
 }
 
 const Stack = createStackNavigator<ProductsStackParams>();
@@ -30,16 +32,14 @@ const ProductsNavigator = () => {
            
         />
         <Stack.Screen 
-            name="ProductsScreen"
-            component={ProductsScreen}
-            options={{
-                title:'Productos'
-            }}
+            name="ProductosUserScreen"
+            component={ProductosUserScreen}
+           
         />
 
         <Stack.Screen  
-            name="ProductScreen"
-            component={ProductScreen}
+            name="DetailProductScreen"
+            component={DetailProductScreen}
         />
 
    </Stack.Navigator>

@@ -3,7 +3,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import ProductsScreen from '../screens/admin/ProductsScreen'
 import ProductScreen from '../screens/admin/ProductScreen';
-import CategoriesScreen from '../screens/CategoriesScreen'
+import CategoriesScreen from '../screens/user/CategoriesScreen'
 
 export type AdminStackParams ={
     ProductsScreen: object,
