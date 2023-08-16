@@ -101,7 +101,7 @@ await AsyncStorage.setItem('token', resp.data.token)
 
 };
 const logout=async()=>{
-    await AsyncStorage.removeItem('token');
+    // await AsyncStorage.removeItem('token');
     dispatch({type:'logout'})
 };
 const removeError=()=>{
