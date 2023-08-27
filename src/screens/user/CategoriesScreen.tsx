@@ -1,60 +1,48 @@
-import { View, Text, Image, FlatList, ScrollView, Button } from 'react-native';
-import React, { useEffect } from 'react'
+import { View, Text, Image, FlatList, ScrollView, Button, Platform, StyleSheet } from 'react-native';
+import React, { useContext, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { StackScreenProps } from '@react-navigation/stack'
 import { ProductsStackParams } from '../../navigator/ProductsNavigator'
 import { useCategories } from '../../hooks/useCategories'
 import { DrawerScreenProps } from '@react-navigation/drawer';
+import { ProductsContext } from '../../context/ProductsContext';
+
+
+import HeaderPage from '../../components/HeaderPage';
+
+
 
 interface Props extends DrawerScreenProps<ProductsStackParams,'CategoriesScreen'>{}
 
-const CategoriesScreen = ({navigation}:Props) => {
 
-    const {categories} = useCategories()
+
+const CategoriesScreen = ({navigation}:Props) => {
+  
+  // const {top} = useSafeAreaInsets() //* para colocar la separacion de la parte de arriba del celular.
+
+    const {categories} = useCategories();
+    const {loadProductsByCategory, productsCategory}= useContext(ProductsContext);
+
+    
 
     useEffect(() => {
       navigation.setOptions({
         headerLeft:()=> <Text style={{fontSize: 30}}> MENU</Text>
       })
     }, [])
+
+    const idCategory = (id:string) => { 
+      loadProductsByCategory(id)
+      navigation.navigate('ProductosUserScreen')
+    };
     
 
   return (
     <>
-      <View style={{
-        width:'100%', 
-        height:'33%', 
-        backgroundColor:'#04a4a4',
-        position: 'absolute',
-        paddingTop:'15%',
-        alignItems:'center'
-        
-      }}>
-         <Button 
-         
-         title='menu'
-         onPress={()=> navigation.toggleDrawer()}
-         
-         />
-
-        <Image
-
-          source={require('../../assets/funko-logo-1-2.png')}
-          style={{
-            width: 155, 
-            height:53, 
-            tintColor:'white', 
-            justifyContent:'center'}}
-        />
-        <Text style={{
-          marginTop: 15,
-          fontSize:30,
-          color:'white',
-          
-        }}> Categorias </Text>
-      
-      </View>
-   
+      <HeaderPage 
+        navigation={navigation}
+        title='Categorias'
+     />  
+    
       <View style={{  
           flex:1,
           width:'100%',
@@ -72,7 +60,7 @@ const CategoriesScreen = ({navigation}:Props) => {
 
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={()=>navigation.navigate('ProductosUserScreen')}
+              onPress={()=> idCategory(item._id)}
                 >
 
               <Image 
@@ -96,3 +84,8 @@ const CategoriesScreen = ({navigation}:Props) => {
 }
 
 export default CategoriesScreen
+
+const styles = StyleSheet.create({
+
+
+})

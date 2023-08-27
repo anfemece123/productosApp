@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
+import Icon from 'react-native-vector-icons/dist/Ionicons';
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
 import AdminNavigator from './AdminNavigator';
 import ProductsNavigator from './ProductsNavigator';
 import { Image, Text, View, useWindowDimensions, TouchableOpacity } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
+
 
  const Drawer = createDrawerNavigator();
 
@@ -42,9 +44,6 @@ import { AuthContext } from '../context/AuthContext';
 
 const MenuInterno = ({navigation}: DrawerContentComponentProps) => {
   const {user, logout, status} = useContext( AuthContext); 
-
-  console.log( 'user en menu interno',user)
-  console.log( 'status en menu interno',status)
 
   return(
     <DrawerContentScrollView style={{ backgroundColor: '#080c14'}}>
@@ -102,12 +101,13 @@ const MenuInterno = ({navigation}: DrawerContentComponentProps) => {
           onPress={logout}
           >
             <Text style={{
-              color:'white',
+              color:'red',
               fontSize: 20,
               marginVertical: 10
             }}>
-              Cerrar sesión
-            </Text>
+              Logout  <Icon name="log-out-outline" size={20} color='red'/>
+            </Text> 
+           
           </TouchableOpacity>
           </>
             
@@ -130,12 +130,13 @@ const MenuInterno = ({navigation}: DrawerContentComponentProps) => {
           onPress={logout}
           >
             <Text style={{
-              color:'white',
+              color:'red',
               fontSize: 20,
               marginVertical: 10
             }}>
-              Cerrar sesión
-            </Text>
+              Logout <Icon name="log-out-outline" size={20} color='red'/>
+            </Text> 
+           
           </TouchableOpacity>
             </>
             )
