@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import React, { useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { ProductsContext } from '../../context/ProductsContext';
 import HeaderPage from '../../components/HeaderPage';
 import { DrawerScreenProps } from '@react-navigation/drawer';
@@ -8,47 +8,66 @@ import { ProductsStackParams } from '../../navigator/ProductsNavigator';
 interface Props extends DrawerScreenProps<ProductsStackParams, 'ProductosUserScreen'> {}
 
 const ProductosUserScreen = ({ navigation }: Props) => {
-  const { productsCategory, clearProductsCategory } = useContext(ProductsContext);
+  const { productsCategory, clearProductsCategory, isLoading} = useContext(ProductsContext);
+
+  console.log(isLoading); 
 
   useEffect(() => {
-    
-  
     return () => {
-      clearProductsCategory()
+      clearProductsCategory();
     }
   }, [])
-  
-
-  // Divide los productos en grupos de dos
-  const groupedProducts = [];
-  for (let i = 0; i < productsCategory.length; i += 2) {
-    groupedProducts.push(productsCategory.slice(i, i + 2));
-  }
 
   return (
     <>
-      <HeaderPage title={productsCategory[0]?.categoria.nombre} navigation={navigation} />
+  
+    {
+      isLoading ? (
+        <>
+      <HeaderPage title={productsCategory[0]?.categoria.nombre} navigation={navigation} display='flex'/>
+      <View style={ styles.loadingIndicator}>
+
+        <ActivityIndicator color='white' size={50} />
+      </View>
+        </>
+      ) : (
+    <>
+        <View style={{flex:1, backgroundColor:'#04a4a4'}}>
+      <HeaderPage title={productsCategory[0]?.categoria.nombre} navigation={navigation} display='flex'/>
       <ScrollView
         style={{
           flex: 1,
           width: '100%',
-          marginTop: 200,
+          marginTop: 180,
           borderRadius: 50,
-          backgroundColor: 'white',
+          backgroundColor:'#080c14',
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: -5,
+          },
+          shadowOpacity: 0.29,
+          shadowRadius: 4.65,
+
+          elevation: 7,
         }}>
-        <View style={styles.container}>
-          {groupedProducts.map((row, rowIndex) => (
-            <View style={styles.rowContainer} key={rowIndex}>
-              {row.map((item) => (
-                <View style={styles.column} key={item._id}>
-                  <Image source={{ uri: item.img }} style={styles.images} />
+        <View style={styles.container}>    
+              {productsCategory.map((item) => (
+                <View key={item._id} style={styles.cardContainer}>
+                  <View style={styles.circleContainer}>
+
+                  <View style={styles.circle}/>
+                  </View>
                   <Text style={styles.text}>{item?.nombre}</Text>
+                  <Image source={{ uri: item?.img }} style={styles.images} />
                 </View>
-              ))}
-            </View>
-          ))}
+              ))}      
         </View>
       </ScrollView>
+    </View>
+    </>
+      )
+    }
     </>
   );
 };
@@ -56,24 +75,64 @@ const ProductosUserScreen = ({ navigation }: Props) => {
 export default ProductosUserScreen;
 
 const styles = StyleSheet.create({
+
+  cardContainer:{
+    width:350,
+    height:300,
+    marginVertical:20,
+    borderRadius:50,
+    borderBottomLeftRadius:50,
+    backgroundColor: 'rgba(35,35,35,35)'
+  },
   images: {
-    width: 145,
-    height: 95,
+    width: 280,
+    height: 200,
+    marginTop:20,
+    alignSelf:'center',
   },
   container: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  text: {
-    color: 'black',
-  },
-  rowContainer: {
-    flexDirection: 'row',
+    flex:1,
+    marginVertical: 20,
     alignItems: 'center',
     marginBottom: 20, // Adjust spacing between rows
+    marginHorizontal:30
+  
   },
-  column: {
+  text: {
+    color: 'white',
+    alignSelf:'center',
+    fontWeight:'bold',
+    fontSize:20,
+    marginTop:10,
+    textTransform: 'capitalize',
+    fontFamily:'Impact'
+  },
+  // *loading 
+  loadingIndicator: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    marginTop: 180,
+    borderRadius: 50,
+    backgroundColor:'#080c14'
   },
+  circle:{
+    position:'absolute',
+    width: 250,
+    height:250,
+    backgroundColor:'#04a4a4',
+    borderRadius: 100,
+    top:150,
+    right:-40,
+  },
+  circleContainer:{
+    position:'absolute',
+    bottom: 0,
+    right: 0,
+    width: 250,
+    height:250,
+    overflow: 'hidden',
+    borderRadius:50
+  }
 });

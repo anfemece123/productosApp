@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ProductsContext } from '../../context/ProductsContext'
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProductsStackParams } from '../../navigator/ProductsNavigator';
+import HeaderPage from '../../components/HeaderPage';
 
 interface Props extends StackScreenProps<ProductsStackParams,'ProductsScreen'>{}
 
@@ -34,13 +35,16 @@ export default function ProductsScreen({navigation}:Props) {
       setIsRefreshing(false);
 
     }
-
-
-
   return (
     <View style={{flex:1,marginHorizontal:10}}>
+           <HeaderPage  
+            navigation={navigation}
+            title='Productos'
+            display='none'
+            />
       
         <FlatList
+        style={{marginTop:400}}
         data={products}
         keyExtractor={(p)=>p._id}
         

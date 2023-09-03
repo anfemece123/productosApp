@@ -9,6 +9,7 @@ import {Asset, launchCamera, launchImageLibrary} from 'react-native-image-picker
 import { useCategories } from '../../hooks/useCategories';
 import { useForm } from '../../hooks/useForm';
 import { ProductsContext } from '../../context/ProductsContext';
+import HeaderPage from '../../components/HeaderPage';
 
 
 
@@ -100,8 +101,16 @@ const ProductScreen = ({navigation,route}:Props) => {
   }
 
   return (
+
     <View style={styles.container }>
-      <ScrollView>
+      <HeaderPage  
+        navigation={navigation}
+        title='Productos'
+        display='flex'
+        />
+      <ScrollView
+      style={{marginTop:200}}
+      >
         <Text style={styles.label}>Nombre del producto:</Text>
         <TextInput 
           placeholder='Producto'
@@ -189,8 +198,8 @@ export default ProductScreen
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    marginTop:10,
-    marginHorizontal:20
+
+   
   },
   label:{
     fontSize: 20

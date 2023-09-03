@@ -21,6 +21,7 @@ import { AuthContext } from '../context/AuthContext';
     screenOptions={{
       headerShown:false,
       drawerType: width >= 768 ? 'permanent' : 'front',
+      drawerPosition:'right'
   }}
   drawerContent={(props)=> <MenuInterno {...props} />} //* Se le pasan las props para que funcione
     >

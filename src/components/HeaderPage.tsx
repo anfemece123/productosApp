@@ -1,28 +1,47 @@
 import { Platform, StyleSheet, Text, View , Image} from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/dist/Ionicons';
 import { DrawerScreenProps } from '@react-navigation/drawer'
-import { ProductsStackParams } from '../navigator/ProductsNavigator'
+import ProductsNavigator, { ProductsStackParams } from '../navigator/ProductsNavigator'
+import { useNavigationContainerRef } from '@react-navigation/native';
+
 
 interface Props{
     navigation:any  
     title: string
+    display:'flex'| 'none'
 };
 
-const HeaderPage = ({navigation, title}: Props) => {
+const HeaderPage = ({navigation, title, display}: Props) => {
+
+  console.log(ProductsNavigator)
   return (
     <View style={[      
         (Platform.OS==='ios')? styles.containerHeaderIos: styles.containerHeaderAndroid,
       ]}>
+        
+        <View style={{flexDirection: 'row', justifyContent: 'space-between',marginTop:40}}>
+          
 
-        <TouchableOpacity  
-        onPress={()=> navigation.toggleDrawer()}
-        style={{ margin: 15 }}
-        >
- 
-            <Icon name="menu-outline" size={40} color='white'/>
-         </TouchableOpacity>
+          <View style={{width:40}}>
+            <TouchableOpacity 
+            style={{ marginLeft:10, width:40, display:display}}
+            onPress={() => navigation.pop()}
+          
+            >
+              <Icon name="chevron-back-outline" size={40} color='white'/>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ marginRight:15,width:40}}>
+            <TouchableOpacity  
+            onPress={()=> navigation.toggleDrawer()}
+            >
+                <Icon name="menu-outline" size={40} color='white'/>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <Image
 
@@ -36,12 +55,17 @@ const HeaderPage = ({navigation, title}: Props) => {
             
             }}
         />
-        <Text style={{
-          marginTop: 15,
-          fontSize:30,
-          color:'white',
-          alignSelf: 'center'           
-        }}> {title} </Text>
+        <Text 
+          style={{
+            marginTop: 15,
+            fontSize:30,
+            color:'white',
+            alignSelf: 'center',
+            fontFamily:'Impact', 
+            textTransform: 'capitalize'
+          }}> 
+        {title} 
+        </Text>
       
       </View>
   )
@@ -52,7 +76,6 @@ export default HeaderPage
 const styles = StyleSheet.create({
     containerHeaderAndroid:{
         width:'100%', 
-        height:'33%', 
         backgroundColor:'#04a4a4',
         position: 'absolute',
         paddingTop: '5%'
@@ -60,11 +83,10 @@ const styles = StyleSheet.create({
           },
       containerHeaderIos:{
         width:'100%', 
-        height:'33%', 
+        height:'30%', 
         backgroundColor:'#04a4a4',
         position: 'absolute',
-      
         // marginTop: top
-        paddingTop:'10%',
+        paddingTop:'5%',
       }
 })

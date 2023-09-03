@@ -38,17 +38,27 @@ const CategoriesScreen = ({navigation}:Props) => {
 
   return (
     <>
+    <View style={{flex:1, backgroundColor:'#04a4a4'}}>
       <HeaderPage 
         navigation={navigation}
         title='Categorias'
-     />  
-    
+        display='none'
+     />    
       <View style={{  
-          flex:1,
-          width:'100%',
-          marginTop:180,
-          borderRadius: 50,
-          backgroundColor:'#080c14'
+            flex:1,
+            width:'100%',
+            marginTop:180,
+            borderRadius: 50,
+            backgroundColor:'#080c14',
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: -5,
+            },
+            shadowOpacity: 0.29,
+            shadowRadius: 4.65,
+
+            elevation: 7,
           }}>
 
           <FlatList
@@ -78,6 +88,7 @@ const CategoriesScreen = ({navigation}:Props) => {
           )}
           
           />
+        </View>
       </View>
     </>
   )

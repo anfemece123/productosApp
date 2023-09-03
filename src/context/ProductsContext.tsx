@@ -7,6 +7,7 @@ import { Asset} from "react-native-image-picker";
 type ProductsContextProps={
     products: Producto[];
     productsCategory: Producto[];
+    isLoading:boolean;
     loadProducts:()=>Promise<void>;
     loadProductsByCategory:(categoryId:string)=>Promise<void>;
     addProduct: (categoryId:string, productName:string)=>Promise<Producto>;
@@ -23,7 +24,8 @@ export const ProductsContext= createContext({} as ProductsContextProps)
 
 export const ProductsProvider =({children}:any)=>{
     const [products, setProducts] = useState<Producto[]>([]);
-    const [productsCategory, setProductsCategory] = useState<Producto[]>([])
+    const [productsCategory, setProductsCategory] = useState<Producto[]>([]);
+    const [isLoading, setisLoading] = useState(true)
 
     useEffect(() => {
       loadProducts();
@@ -37,12 +39,15 @@ export const ProductsProvider =({children}:any)=>{
     };
 
     const loadProductsByCategory = async (categoryId:string) => {
+        setisLoading(true);
 
         const resp = await cafeApi.get<ProductsResponse>('/productos?limite=50');
 
         const productCategory = resp.data.productos.filter((pro)=> pro.categoria._id == categoryId)
        
-        setProductsCategory([...productCategory])
+        setProductsCategory([...productCategory]);
+
+        setisLoading(false); 
      
     };
 
@@ -51,7 +56,7 @@ export const ProductsProvider =({children}:any)=>{
     }
 
 
-    const addProduct=async (categoryId:string, productName:string):Promise<Producto>=>{
+    const addProduct= async (categoryId:string, productName:string):Promise<Producto>=>{
         // try {
             const resp = await cafeApi.post<Producto>('/productos', {
                 nombre: productName,
@@ -117,7 +122,8 @@ export const ProductsProvider =({children}:any)=>{
     }; 
 
     return(
-        <ProductsContext.Provider value={{    
+        <ProductsContext.Provider value={{   
+            isLoading, 
             products,
             productsCategory,
             loadProducts,

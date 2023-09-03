@@ -15,6 +15,7 @@ export type ProductsStackParams ={
 
 const Stack = createStackNavigator<ProductsStackParams>();
 
+
 const ProductsNavigator = () => {
   return (
    <Stack.Navigator
